@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:providers_example/providers/counter_provider.dart';
+import 'package:providers_example/widgets/child_counter.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,9 +14,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _counterProvider.addListener(() {
-      print('new value ${_counterProvider.counter}');
-    });
+    _counterProvider.addListener(() {});
   }
 
   @override
@@ -25,10 +24,19 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         body: Center(
           // consumer é utilizado para atulizar a tela quando usa um provider
-          child: Consumer<CounterProvider>(
-            builder: (_, provider, widget) {
-              return Text(provider.counter.toString());
-            },
+          child: Container(
+            width: double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Consumer<CounterProvider>(
+                  builder: (_, provider, widget) {
+                    return Text(provider.counter.toString());
+                  },
+                ),
+                ChildCounter(),
+              ],
+            ),
           ),
         ),
         floatingActionButton: Row(
